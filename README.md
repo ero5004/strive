@@ -40,7 +40,7 @@ CREATE TABLE respondents
     ended_on timestamp with time zone, 
     name text,
     details text, 
-    CONSTRAINT respondents_pkey PRIMARY KEY (respondent)
+    CONSTRAINT respondents_pkey PRIMARY KEY (respondent_id)
 )
 ```
 Answers:
