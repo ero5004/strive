@@ -127,7 +127,7 @@ exports.start_quiz_get = async function(req, res) {
 
 exports.submit_quiz_question_post = async function(req, res) {
 
-    console.log(JSON.stringify(req.body));
+    //console.log(JSON.stringify(req.body));
 
     const quiz_id = req.params.quiz_id;
 
@@ -151,33 +151,35 @@ exports.submit_quiz_question_post = async function(req, res) {
         if (questions && questions.length > 0 && questions.length > next_question_number) {
             const nextQuestion = questions[next_question_number];
             const total_questions = questions.length;
-            return res.render('quiz_question', {title: 'Quiz Question', question: nextQuestion, question_number: next_question_number, total_questions: total_questions, respondent_id: respondent_id} );
+            return res.render('quiz_question', {title: 'Quiz Question', quiz_id: quiz_id, question: nextQuestion, question_number: next_question_number, total_questions: total_questions, respondent_id: respondent_id} );
         } else if (questions.length <= next_question_number) {
             //if the next question is equal to the total number of questions, that means all questions have had answers submitted.
             const updateCompletedResponseQuery = "update respondents set ended_on = CURRENT_TIMESTAMP where respondent_id = $1";
             await db.query(updateCompletedResponseQuery, [respondent_id]);
 
-            res.redirect('/quiz/' + quiz_id + '/results/' + respondent_id);
+            return res.redirect('/quiz/' + quiz_id + '/results/' + respondent_id);
         }
     } catch (err) {
         console.log(err);
-        res.redirect('/quiz');
+        return res.redirect('/quiz');
     }
-    res.redirect('/quiz');
+    return res.redirect('/quiz');
 };
 
 /**
  * Should probably also display details about this respondent like their name and when they started and finished the quis.
  */
 exports.quiz_results_get = async function(req, res) {
+    console.log("quiz_results_get");
     const quiz_id = req.params.quiz_id;
     const respondent_id = req.params.respondent_id;
 
-    const getAnswersQuery = "select * from answers inner join questions on answers.question_id = questions.question_id where quiz_id = $1 and respondent_id = $2 order by question_id asc";
+    const getAnswersQuery = "select * from answers inner join questions on answers.question_id = questions.question_id where answers.quiz_id = $1 and answers.respondent_id = $2 order by answers.question_id asc";
 
     try {
         const results = await db.query(getAnswersQuery, [quiz_id, respondent_id]);
         if (results && results.rows) {
+            console.log(JSON.stringify(results.rows));
             const answers = results.rows;
             return res.render('quiz_response', {title: "Submitted Responses", answers: answers});
         } else {
@@ -187,4 +189,4 @@ exports.quiz_results_get = async function(req, res) {
         console.log(err);
         res.redirect('/quiz');
     }
-}
+};
