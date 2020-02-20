@@ -7,6 +7,7 @@ I implmented this project using Express.js that uses Pug.js for the front end re
 * If you are using a different server or db name, please update the postgres connection string in the db/index.js file
 ### Table Creation Scripts
 * Note - I created and modifed my db using the pgAdmin tool and then extracted these scripts from there. I also did not implement true foreign keys in the interest of saving time and potential headaches.
+
 Quizes:
 ```
 CREATE TABLE quizes
