@@ -53,7 +53,7 @@ exports.quiz_details_get = async function(req, res) {
         const questions = await db.get_quiz_questions(quiz_id);
 
         const getResponsesQuery = "select * from respondents where quiz_id = $1 order by started_on desc";
-        const results = db.query(getResponsesQuery, [quiz_id]);
+        const results = await db.query(getResponsesQuery, [quiz_id]);
         var responses = [];
         if (results && results.rows) {
             responses = results.rows;
