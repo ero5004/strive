@@ -1,0 +1,21 @@
+block content
+    h1= title
+    div='Question ' + (parseInt(question_number) + 1) + ' of ' + total_questions
+        h4= question.question_text
+    div
+        form(action='/quiz/' + quiz_id + '/submit/' + question.question_id, method='POST' name='question_form')
+            input(type='hidden' name='question_id' value=question.question_id)
+            input(type='hidden' name='question_number' value=question_number)
+            input(type='hidden' name='respondent_id' value=respondent_id)
+            input(type='text' name='answer_text')
+            input(type='submit')
+
+<!-- Attempting to get the timer requirement to work but ran out of time.
+    var counter = 180;
+    var interval = setInterval(function() {
+        counter--;
+        if (counter <= 0) {
+            document.question_form.submit();
+            clearInterval(interval);
+        }
+    }, 1000); -->

@@ -1,0 +1,25 @@
+extends layout
+
+block content
+    h1= title
+    div Quizes
+        table
+            thead
+                tr
+                    th Quiz Name
+                    th Created On
+                tbody
+                    each quiz in quizes
+                        tr
+                            td 
+                                a(href='/quiz/' + quiz.quiz_id) #{quiz.name}
+                            td #{quiz.created_on}
+                    else
+                        tr
+                            td No Quizes
+                            td
+        
+        br
+    div
+        a(href='/quiz/create') Create a New Quiz
+                    

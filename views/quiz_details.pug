@@ -1,0 +1,42 @@
+block content
+    h1= title
+    div Quiz Questions
+        table
+            thead
+                tr
+                    th Question Text
+                    th Created On
+                tbody
+                    each question in questions
+                        tr
+                            td #{question.question_text}
+                            td #{question.created_on}
+                    else
+                        tr
+                            td No Questions in Quiz
+                            td
+        a(href='/quiz/'+ quiz_id + '/create') Add a Question
+    
+    div
+        a(href='/quiz/' + quiz_id + '/start') Link to take this quiz
+
+    div Quiz Responses
+        table
+            thead
+                tr
+                    th Response ID
+                    th Start Time
+                    th End Time
+                    th Name (under construction)
+                tbody
+                    each response in responses
+                        tr
+                            td 
+                                a(href='/quiz/' + quiz_id + '/results/' + response.respondent_id) View Responses
+                            td #{response.started_on}
+                            td #{response.ended_on}
+                            td #{response.name}
+                    else
+                        tr
+                            td No Responses Yet
+                            td

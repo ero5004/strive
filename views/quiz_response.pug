@@ -1,0 +1,23 @@
+extends layout
+
+block content
+    h1= title
+    div Quiz Answers
+        table
+            thead
+                tr
+                    th Question Text
+                    th Answer
+                tbody
+                    each answer in answers
+                        tr
+                            td #{answer.question_text}
+                            td #{answer.answer_text}
+                    else
+                        tr
+                            td No Questions in Quiz
+                            td
+        
+    div
+        a(href='/quiz/' + quiz_id) Back to Quiz Details
+                    

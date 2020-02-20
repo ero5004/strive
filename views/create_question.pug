@@ -1,0 +1,8 @@
+extends layout
+
+block content
+    h1= title
+    form(action='/quiz/' + quiz_id + '/create', method='POST')
+        label(for='question_text') Question Text
+        input(type='text' name='question_text')
+        input(type='submit') 
